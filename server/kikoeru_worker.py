@@ -153,7 +153,8 @@ def format_seconds(
 # output complete lrc contents joined by '\n'
 def transcribe_audio(audio_path:str)->str:
     global model
-    segments, _ = model.transcribe(task="transcribe", audio=audio_path, language="zh")
+    # segments, _ = model.transcribe(task="transcribe", audio=str(audio_path), language="zh")
+    segments, _ = model.transcribe(task="translate", audio=audio_path, language="ja",vad_filter=True,condition_on_previous_text=True)
     return "\n".join(
         map(
             lambda segment: f"{format_seconds(segment.start)} {segment.text}",
@@ -239,8 +240,15 @@ def load_model():
     model_path = common.getModelPath()
     device = common.getTranscribeDevice()
     compute_type = "default"
-    model = WhisperModel(model_path, device=device, compute_type=compute_type)
-    print("load model finished, start background loop, waiting for transcribe task")
+    try:
+        # 尝试加载模型
+        model = WhisperModel(model_path, device=device, compute_type=compute_type)
+        print("load model finished, start background loop, waiting for transcribe task")
+    except Exception as e:
+        # 捕获并处理任何异常
+        print(f"Error loading model: {e}")
+        # 你可以选择在这里处理异常，比如退出程序或执行其他的错误处理操作
+        # sys.exit(1)  # 可选：在出错时退出程序
 
 def main():
     print("hello world: ")
