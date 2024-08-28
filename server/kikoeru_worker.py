@@ -197,7 +197,10 @@ def processTask(task):
     if 'audio_file_name' not in task:
         print("下载音频文件")
         audio_file_name = f"{task['id']}{task['audio_ext']}"
-        downloadAudioFile(task, audio_file_name)
+        if not downloadAudioFile(task, audio_file_name):
+            finishTask(task, False, "音频下载失败")
+            os.unlink(task_file_path)
+            return
         task['audio_file_name'] = audio_file_name
         saveTaskToFile(task)
     else:
