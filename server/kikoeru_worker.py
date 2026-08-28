@@ -242,11 +242,11 @@ def load_model():
     global model
     model_path = common.getModelPath()
     device = common.getTranscribeDevice()
-    compute_type = "default"
+    compute_type = common.getComputeType()
     try:
         # 尝试加载模型
         model = WhisperModel(model_path, device=device, compute_type=compute_type)
-        print("load model finished, start background loop, waiting for transcribe task")
+        print(f"load model finished (device={device}, compute_type={compute_type}), start background loop, waiting for transcribe task")
     except Exception as e:
         # 捕获并处理任何异常
         print(f"Error loading model: {e}")

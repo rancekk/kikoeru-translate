@@ -1,8 +1,10 @@
-av==10.*
-ctranslate2>=3.17,<4
+av>=12.0.0
+ctranslate2>=4.0.0
+nvidia-cublas-cu12
+nvidia-cudnn-cu12
 huggingface_hub>=0.13
-tokenizers==0.13.*
+tokenizers>=0.19.0
 pysondb==1.6.2
-flask==3.0.0
-flask-cors==4.0.0
-onnxruntime-gpu==1.19.0
+flask>=3.0.0
+flask-cors>=4.0.0
+onnxruntime-gpu>=1.19.0

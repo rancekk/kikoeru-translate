@@ -38,6 +38,10 @@ def getBackgroundIdleSeconds()->int:
 def getTranscribeDevice()->str:
     return os.environ.get("TRANSCRIBE_DEVICE", "auto")
 
+def getComputeType()->str:
+    default_type = "float16" if getTranscribeDevice() == "cuda" else "default"
+    return os.environ.get("COMPUTE_TYPE", default_type)
+
 def getServerPort()->int:
     return int(os.environ.get("PORT", "8820"))
 
